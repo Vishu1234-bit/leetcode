@@ -3,7 +3,6 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode,carry=0) -> ListNode:
         while(l1 is not None or l2 is not None):
