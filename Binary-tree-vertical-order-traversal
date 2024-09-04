@@ -1,0 +1,35 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def verticalOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if(root == None):
+            return []
+        columnTable = {}
+        minmaxCol=[0,0]
+        def dfs(node,row,col):
+            nonlocal minmaxCol
+            if(node is not None):
+                if(col not in columnTable):
+                    columnTable[col] = [[row,node.val]]
+                else:
+                    columnTable[col].append([row,node.val])
+                minmaxCol[0] = min(col,minmaxCol[0])
+                minmaxCol[1]=  max(col,minmaxCol[1])
+                dfs(node.left,row+1,col-1)
+                dfs(node.right,row+1,col+1)
+        dfs(root,0,0)
+        output_arr=[]
+        for i in range(minmaxCol[0],minmaxCol[1]+1):
+            if i in columnTable:
+                columnTable[i].sort(key=lambda x: x[0])
+                column_val = [val for row,val in columnTable[i]]
+                output_arr.append(column_val)
+        return output_arr
