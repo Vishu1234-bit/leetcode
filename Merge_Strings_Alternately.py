@@ -1,21 +1,17 @@
-class Solution(object):
-    def mergeAlternately(self, word1, word2):
-        """
-        :type word1: str
-        :type word2: str
-        :rtype: str
-        """
-        word1len = len(word1)
-        word2len = len(word2)
-        minlen = min(word1len,word2len)
-        output_String = ""
-        for i in range(0,minlen):
-            output_String+=word1[i]
-            output_String+=word2[i]
-        if(word2len>minlen):
-            for i in range(minlen,word2len):
-                output_String+=word2[i]
-        if(word1len>minlen):
-            for i in range(minlen,word1len):
-                output_String+=word1[i]       
-        return output_String
+class Solution:
+    def mergeAlternately(self, word1: str, word2: str) -> str:
+        indexWord1 = 0
+        indexWord2 = 0
+        result = ""
+        while(indexWord1<len(word1) and indexWord2<len(word2)):
+            result+=word1[indexWord1]
+            result+=word2[indexWord2]
+            indexWord1+=1
+            indexWord2+=1
+        while(indexWord1<len(word1)):
+            result+=word1[indexWord1]
+            indexWord1+=1
+        while(indexWord2<len(word2)):
+            result+=word2[indexWord2]
+            indexWord2+=1
+        return result
