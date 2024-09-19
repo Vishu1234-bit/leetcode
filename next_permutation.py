@@ -10,11 +10,10 @@ class Solution:
                 break 
         if(k!=-1):
             j=-1
-            for i in range(len(nums)):
+            for i in range(len(nums)-1,k,-1):
                 if(nums[i]>nums[k]):
-                    j=i
-            nums[j],nums[k]=nums[k],nums[j]
-        print(k)
+                    nums[i],nums[k]=nums[k],nums[i]
+                    break
         first = k+1
         last  = len(nums)-1
         while(first<last):
