@@ -4,18 +4,16 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def addTwoNumbers(self, l1: ListNode, l2: ListNode,carry=0) -> ListNode:
-        while(l1 is not None or l2 is not None):
-            fdata = 0 if l1 is None else l1.val
-            sdata = 0 if l2 is None else l2.val
-            Sum = carry + fdata + sdata
-            carry = 1 if Sum>=10 else 0
-            Sum = Sum if Sum<10 else Sum%10
-            temp = ListNode(Sum)
-            if(l1.next!= None or l2.next!=None or carry!=0):
-                if l1.next == None:
-                    l1.next =ListNode(0)
-                if l2.next == None:
-                    l2.next = ListNode(0)
-                temp.next = self.addTwoNumbers(l1.next,l2.next,carry)
-            return temp
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode],carry = 0) -> Optional[ListNode]:
+        if(l1 is None and l2 is None and carry==0):
+            return  None
+        firstVal = 0 if l1 is None else l1.val
+        secondVal = 0 if l2 is None else l2.val
+        sumOf2nodes = firstVal+secondVal+carry
+        carry = sumOf2nodes//10
+        dummy= ListNode(sumOf2nodes%10)
+        nextl1 = l1.next if l1 else None
+        nextl2 = l2.next if l2 else None
+        dummy.next = self.addTwoNumbers(nextl1,nextl2,carry)
+        return dummy
+
