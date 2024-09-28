@@ -5,19 +5,39 @@
 #         self.next = next
 class Solution:
     def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        dummy = ListNode(0,head)
-        curr_node = dummy
-        first = curr_node.next
-        if(first):
-            second = first.next
-        else:
-            return head
-        while(first and second):
-            first.next = second.next
-            second.next = first
-            curr_node.next = second
-            curr_node = first
-            first = curr_node.next
-            if(first):
-                second = first.next
-        return dummy.next
+        def getKthElement(curr,k):
+            k-=1
+            temp=curr
+            while(temp is not None and k>0):
+                temp=temp.next
+                k-=1
+            return temp
+        def swapNodes(curr):
+            temp = curr
+            prev=None
+            nextNode = temp.next
+            temp.next = prev
+            nextNode.next = temp
+            temp=nextNode
+            return temp
+        if(not head):
+            return None
+        curr =head
+        groupPrev = None
+        while(True):
+            kthNode = getKthElement(curr,2)
+            if(kthNode==None):
+                if(groupPrev):
+                    groupPrev.next = curr
+                break
+            groupNxt = kthNode.next
+            kthNode.next=None
+            newHead = swapNodes(curr)
+            if(curr==head):
+                head = kthNode
+            else:
+                groupPrev.next = newHead
+            curr.next = groupNxt
+            groupPrev = curr
+            curr = groupNxt
+        return head
