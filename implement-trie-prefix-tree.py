@@ -1,33 +1,46 @@
+class TrieNode():
+    def __init__(self):
+        self.children = {}
+        self.isEndOfWord = False
 class Trie(object):
 
     def __init__(self):
-        self.trie = []
+        self.root = TrieNode()
 
     def insert(self, word):
         """
         :type word: str
         :rtype: None
         """
-        self.trie.append(word)
-        
-
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.isEndOfWord = True
     def search(self, word):
         """
         :type word: str
         :rtype: bool
         """
-        return word in self.trie
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return node.isEndOfWord
 
     def startsWith(self, prefix):
         """
         :type prefix: str
         :rtype: bool
         """
-        for i in self.trie:
-            if(i.startswith(prefix)):
-                return True
-        return False
-
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            node = node.children[char]
+        return True
 
 # Your Trie object will be instantiated and called as such:
 # obj = Trie()
