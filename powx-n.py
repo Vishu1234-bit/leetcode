@@ -1,16 +1,17 @@
-class Solution:
-    def myPow(self, x: float, n: int) -> float:
+class Solution(object):
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
         if(n==0):
             return 1
-        power=1
-        n_mod=abs(n)
-        while(n_mod>0):
-            if(n_mod%2):
-                power*=x
-            x*=x
-            n_mod//=2
-        if(n>0):
-            return power
+        if(n<0):
+            x=1/x
+            n=-n
+        if(n%2==0):
+            half = self.myPow(x,n//2)
+            return half*half
         else:
-            return 1/power
-        
+            return x*self.myPow(x,n-1)
