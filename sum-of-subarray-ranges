@@ -1,0 +1,60 @@
+class Solution:
+    def subArrayRanges(self, nums: List[int]) -> int:
+        def next_smaller(nums):
+            stack=[]
+            n = len(nums)
+            nse = [n for i in range(n)]
+            for i in range(n-1,-1,-1):
+                while(stack and nums[stack[-1]]>nums[i]):
+                    stack.pop()
+                if(stack):
+                    nse[i]=stack[-1]
+                stack.append(i)
+            return nse
+        def next_greater(nums):
+            stack=[]
+            n = len(nums)
+            nle = [n for i in range(n)]
+            for i in range(n-1,-1,-1):
+                while(stack and nums[stack[-1]]<nums[i]):
+                    stack.pop()
+                if(stack):
+                    nle[i]=stack[-1]
+                stack.append(i)
+            return nle
+        def prev_smaller(nums):
+            stack=[]
+            n = len(nums)
+            psee = [-1 for i in range(n)]
+            for i in range(n):
+                while(stack and nums[stack[-1]]>=nums[i]):
+                    stack.pop()
+                if(stack):
+                    psee[i]=stack[-1]
+                stack.append(i)
+            return psee
+        def prev_greater(nums):
+            stack=[]
+            n = len(nums)
+            plee = [-1 for i in range(n)]
+            for i in range(n):
+                while(stack and nums[stack[-1]]<=nums[i]):
+                    stack.pop()
+                if(stack):
+                    plee[i]=stack[-1]
+                stack.append(i)
+            return plee
+        def calculateSum(nums,prev_fn,nxt_fn):
+            nxt = nxt_fn(nums)
+            prev = prev_fn(nums)
+            n = len(nums)
+            total=0
+            for i in range(n):
+                right = i-prev[i]
+                left = nxt[i]-i
+                total = total+(right*left*nums[i])
+            return total
+        sumMax = calculateSum(nums,prev_greater,next_greater)
+        sumMin = calculateSum(nums,prev_smaller,next_smaller)
+        return sumMax-sumMin
+        
