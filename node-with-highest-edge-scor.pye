@@ -1,0 +1,6 @@
+class Solution:
+    def edgeScore(self, edges: List[int]) -> int:
+        score = {i:0 for i in range(len(edges))}
+        for node,neighbour in enumerate(edges):
+            score[neighbour]+=node
+        return max(range(len(edges)),key=lambda x:(score[x],-x))
