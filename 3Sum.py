@@ -31,5 +31,31 @@ class Solution(object):
                 if((-1*sum_pair) in N):
                     res.add(tuple(sorted([p[i],p[j],-1*sum_pair])))
         return res
-        
+//Two pointer approach
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        res=[]
+        n = len(nums)
+        for i in range(n):
+            if(i>0 and nums[i]==nums[i-1]):
+                continue
+            left = i+1
+            right = n-1
+            target = -nums[i]
+            while(left<right):
+                sum_ = nums[left]+nums[right]
+                if(sum_==target):
+                    res.append([nums[i],nums[left],nums[right]])
+                    left+=1
+                    right-=1
+                    while(left<right and nums[left]==nums[left-1]):
+                        left+=1
+                    while(left<right and nums[right]==nums[right+1]):
+                        right-=1
+                elif(sum_<target):
+                    left+=1
+                else:
+                    right-=1
+        return res
             
